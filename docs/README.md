@@ -31,3 +31,6 @@ In particular we generate two groups of artificial texts (ENG, ITA) by taking at
 
 Then we use a Naive-Bayes ML model fitting it on the training set (more than 200 texts: half in english and half in italian). The prediction is done in two real english and italian texts giving a correct discrimination.
 
+
+[network1]: img/network1.png "English text network with Networkx"
+[network2]: img/network2.png "Italian text network with Networkx"
