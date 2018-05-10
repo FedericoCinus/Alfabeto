@@ -4,48 +4,30 @@
 - [Overview](#overview)
 - [Run](#run)
 - [Solution](#Solution)
-- [Results](#Results)
 
 
 ## Overview
 
-In this work is introduced the Last Mile problem and the Agent-Based modelling process. A solution for the Last Mile problem is proposed suggesting an active engagement of the population. Some estimation has been done in order to make the simulation suitable for representing the city of Turin and actual cost of the delivering process. Results show the robustness of the proposed solution both in economical and user’s engagement terms, discussing also extreme situation.
+Alfabeto is a Python3 program with the aim of checking a text language (between english and italian). The main idea is to underly the languages sounds through network theory and generalize thanks to machine learning algorithms.
 
-More detail on Article.pdf in the Github repository.
 
 ## Run
 
-Download ABMile from GitHub repository.
-Code is written in NetLogo 6.0 and it is possible to freely download it and run the simulation (https://ccl.northwestern.edu/netlogo/download.shtml).
-
-To run open `ABMile` and click on `Setup` and then `Go`. Choose parameters before running.
+Download Alfabeto2.0 ipython notebook from GitHub repository.
+Code is written in Python 3 and it requires the following libraries: networkx sklearn. 
 
 ![gif][gif]
 
 ## Solution
 
-Delivery is carry out by Users. These are agents created in random patches and with and assigned random patches as destination. A special patchset is created to represent the storages around the city. Each packages is placed in a locker-patch ad assigned a random point on the map as destination. The User will go from his position to the position of the package, then go the destination of the package and lastly to his own destination.
+Language's sounds are treated as near letters in a word, e.g. in the word "Alfabeto" we have the following "links": (a,l), (l,f), (f,a), et cetera. We convert this idea into a weighted network, where links are as descrbed above and the number of times a link appears is its weght. In this way we can create a network for a general text and plot it converting the links' weights into distances i.e. if two letters are usually closed each other in the text, they will be near in the network plotting:
 
-To optimize the travel we will use an auction for each package. Moreover packages are not placed randomly in the storages patches but, if the space is enough, each package will be placed in the storage nearest to its destination.
+![network1][network1]
+![network2][network2]
 
+Studying the network we can calculate the following quantities: degree distribution, clustering coefficient, assortative coefficient, et cetera. We filter them in order to have only usefull quantities in the aim of discriminating two texts. Then we use them as features of a machine learning algorithm. 
 
-## Results
+In particular we generate two groups of artificial texts (ENG, ITA) by taking at random from an english and italian dictionary (respectively) some words. We calculate the usefull network quantities and assign them as features vector, then we add the right language label (ENG/ITA), according to its creation. This is he training set.
 
-Using genetic algorithms implemented in Behavior Search 6.0 we optimized the num- ber of storages and their space, keeping all other estimated parameters fixed such as the number of users, the number of packs and the cost of each box in the storage.
+Then we use a Naive-Bayes ML model fitting it on the training set (more than 200 texts: half in english and half in italian). The prediction is done in two real english and italian texts giving a correct discrimination.
 
-Figure below show the fitness minimization (expenses) with the following parameters: 1400 packs, 700 users, 1e/km for users’ deviation, 1.75e as maximum expense for a pack delivery, 0.2e cost storage’s box.
-
-![gen][gen]
-
-Considering 0.8e as storage’s box cost, we find again that the number of boxes in each storage is greater than the minimum needed. This implies that spending money for having bigger storage is useful in case a pack has to be delivered in the neighborhood.
-
-![gen2][gen2]
-
-May be found interesting for the reader to have a deeper look at two of the most important curves in our simulation: number packs vs. time and total expenses vs. time. The figure below show that the number of packs exponentially decreases with time as expected. On the other hand the total expenses approximately increase as a logarithm, which compensates the number of packs trend.
-
-![concl][concl]
-
-[gen]: img/gen.png "Behavior Search result: 10 storages with 304 boxes each, total expense 1439.28"
-[gen2]: img/gen2.png "Behavior Search result: 10 storages with 153 boxes each, total expense 1542.02"
-[concl]: img/concl.png
-[gif]: img/gif.gif "gif"
